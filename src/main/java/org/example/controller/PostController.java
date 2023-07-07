@@ -17,7 +17,7 @@ public class PostController {
   }
 
   @GetMapping
-  public Map<Long,Post> all() {
+  public List<Post> all() {
     return service.all();
   }
 

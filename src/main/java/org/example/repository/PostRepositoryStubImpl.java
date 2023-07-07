@@ -13,8 +13,8 @@ public class PostRepositoryStubImpl implements PostRepository {
     protected Map<Long, Post> removedPostCollection = Collections.synchronizedMap(new HashMap<>());
     protected AtomicLong idCount = new AtomicLong(0);
 
-    public Map<Long, Post> all() {
-        return postCollection;
+    public List<Post> all() {
+        return new ArrayList<>(postCollection.values());
     }
 
     public Optional<Post> getById(long id) {
@@ -38,7 +38,11 @@ public class PostRepositoryStubImpl implements PostRepository {
     }
 
     public void removeById(long id) {
-        removedPostCollection.put(id,postCollection.get(id));
-        postCollection.remove(id);
+        if((!removedPostCollection.containsKey(id))&&(postCollection.containsKey(id))) {
+            removedPostCollection.put(id, postCollection.get(id));
+            postCollection.remove(id);
+        } else{
+            throw new NotFoundException("Запрос на удаление несуществующего или уже удаленного элемента");
+        }
     }
 }

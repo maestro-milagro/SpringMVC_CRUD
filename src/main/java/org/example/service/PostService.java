@@ -17,7 +17,7 @@ public class PostService {
     this.repository = repository;
   }
 
-  public Map<Long,Post> all() {
+  public List<Post> all() {
     return repository.all();
   }
 
